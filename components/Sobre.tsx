@@ -1,5 +1,4 @@
 import Reveal from "@/components/Reveal";
-import fotoSobre from "@/app/assets/smile-portrait.webp";
 
 export default function Sobre({ imageUrl }: { imageUrl?: string | null }) {
   return (
@@ -7,10 +6,8 @@ export default function Sobre({ imageUrl }: { imageUrl?: string | null }) {
       <div className="max-w-[1220px] mx-auto grid md:grid-cols-[0.85fr_1.15fr] gap-[5vw] items-center">
         <div className="gold-frame relative aspect-[4/5] max-w-[340px] mx-auto md:max-w-none overflow-hidden">
           <img
-            src={imageUrl || fotoSobre.src}
+            src={imageUrl || "/img/smile-portrait.webp"}
             alt="Dra. Adriely Anute, retrato"
-            width={fotoSobre.width}
-            height={fotoSobre.height}
             className="absolute inset-0 h-full w-full object-cover"
             loading="eager"
             decoding="async"
