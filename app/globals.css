@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+body { background: #F2ECE1; color: #1B1712; }
+::selection { background: #BE9A5C; color: #141210; }
+:focus-visible { outline: 1px solid #BE9A5C; outline-offset: 4px; }
+
+.gold-rule { width: 52px; height: 1px; background: #BE9A5C; }
+
+.gold-frame { position: relative; }
+.gold-frame::before, .gold-frame::after {
+  content: ""; position: absolute; width: 26px; height: 26px;
+  border: 1px solid #BE9A5C; z-index: 10;
+}
+.gold-frame::before { top: 14px; left: 14px; border-right: none; border-bottom: none; }
+.gold-frame::after { bottom: 14px; right: 14px; border-left: none; border-top: none; }
