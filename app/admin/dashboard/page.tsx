@@ -5,6 +5,7 @@ const CARDS = [
   { href: "/admin/dashboard/novo-depoimento", title: "Novo depoimento", desc: "Adicione o relato de uma paciente com foto, nome e cidade." },
   { href: "/admin/dashboard/novo-antes-depois", title: "Novo antes e depois", desc: "Adicione um caso com as duas fotos e o procedimento." },
   { href: "/admin/dashboard/analytics", title: "Analytics", desc: "Veja o desempenho do site (visitas e páginas mais vistas)." },
+  { href: "/admin/dashboard/imagens", title: "Imagens do site", desc: "Troque as fotos do Hero e da seção Sobre sem alterar o código." },
 ];
 
 export default function DashboardHome() {

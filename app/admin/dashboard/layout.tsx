@@ -7,6 +7,7 @@ const NAV_ITEMS = [
   { href: "/admin/dashboard/depoimentos", label: "Depoimentos" },
   { href: "/admin/dashboard/antes-depois", label: "Antes e depois" },
   { href: "/admin/dashboard/analytics", label: "Analytics" },
+  { href: "/admin/dashboard/imagens", label: "Imagens" },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {

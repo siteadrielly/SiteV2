@@ -39,6 +39,39 @@ async function uploadImage(
   return data.publicUrl;
 }
 
+export async function updateSiteImages(formData: FormData) {
+  const { supabase } = await requireUser();
+  const heroFile = formData.get("heroImage") as File | null;
+  const aboutFile = formData.get("aboutImage") as File | null;
+
+  if ((!heroFile || heroFile.size === 0) && (!aboutFile || aboutFile.size === 0)) {
+    throw new Error("Selecione pelo menos uma imagem para atualizar.");
+  }
+
+  const updates: Record<string, string> = { id: "global", updated_at: new Date().toISOString() };
+
+  if (heroFile?.size) {
+    const heroUrl = await uploadImage(supabase, "site-assets", heroFile);
+    if (heroUrl) updates.hero_image_url = heroUrl;
+  }
+
+  if (aboutFile?.size) {
+    const aboutUrl = await uploadImage(supabase, "site-assets", aboutFile);
+    if (aboutUrl) updates.about_image_url = aboutUrl;
+  }
+
+  const { error } = await supabase
+    .from("site_settings")
+    .upsert(updates, { onConflict: "id" });
+
+  if (error) throw new Error(`Não foi possível atualizar as imagens: ${error.message}`);
+
+  revalidatePath("/");
+  revalidatePath("/admin/dashboard");
+  revalidatePath("/admin/dashboard/imagens");
+  redirect("/admin/dashboard/imagens");
+}
+
 export async function createPost(formData: FormData) {
   const { supabase } = await requireUser();
   const title = String(formData.get("title") || "").trim();

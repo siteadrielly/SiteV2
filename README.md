@@ -39,3 +39,14 @@ Authentication → Users → Add user (sem cadastro público no site).
 - `/resultados` — antes/depois (noindex, fora do menu)
 - `/admin/login` — login do Painel Vital
 - `/admin/dashboard` — posts, depoimentos, antes-depois, analytics
+
+
+## v1.11 — Imagens do site
+
+Execute `supabase/migration-v1.11-site-images.sql` no SQL Editor do Supabase uma única vez.
+
+Depois do deploy, acesse **Painel Vital → Imagens** para trocar:
+- foto do Hero;
+- foto da seção Sobre.
+
+As imagens ficam no bucket público `site-assets`. Se nenhuma imagem tiver sido configurada ainda, o site usa os fallbacks locais atuais.

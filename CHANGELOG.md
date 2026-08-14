@@ -23,3 +23,14 @@
 ## 1.8.0
 - Fixed the Sobre portrait using a bundled static image import.
 - Improved Cloudflare Web Analytics GraphQL query with typed variables and diagnostics.
+
+## 1.11.0
+- Adiciona painel para trocar as fotos do Hero e da seção Sobre.
+- Salva as URLs das imagens no Supabase em `site_settings`.
+- Adiciona bucket público `site-assets` para imagens editáveis do site.
+- Mantém fallbacks locais caso as imagens ainda não tenham sido configuradas.
+
+## v1.13 — Acervo inicial de resultados corrigido
+- Corrigido o botão "Importar acervo inicial": as 8 imagens agora existem nos caminhos públicos usados pelos registros.
+- O acervo inclui 1 caso de toxina botulínica, 2 de facetas e 5 de rinomodelação.
+- Os casos importados são publicados automaticamente e aparecem na galeria da home e em /resultados.
