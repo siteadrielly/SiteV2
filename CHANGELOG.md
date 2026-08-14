@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.14 — Identificação da versão no Painel Vital
+- Atualizada a versão do projeto para 1.14.0.
+- Exibida a versão `v1.14` no cabeçalho do Painel Vital.
+- Mantidas todas as funcionalidades e correções da v1.13.
+
 ## 1.9.0
 - Corrige a galeria Sobre para renderizar a foto sem Reveal/opacity animation.
 - Corrige Analytics Cloudflare para consultar o dataset RUM no escopo da conta.
