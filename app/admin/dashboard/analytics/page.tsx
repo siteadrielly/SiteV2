@@ -8,25 +8,22 @@ type AnalyticsResult =
 
 async function fetchCloudflareAnalytics(): Promise<AnalyticsResult> {
   const token = process.env.CLOUDFLARE_ANALYTICS_API_TOKEN;
-  const zoneTag = process.env.CLOUDFLARE_ZONE_TAG;
+  const zoneTag = process.env.CLOUDFLARE_ZONE_TAG?.trim();
 
   if (!token || !zoneTag) return { ok: false, reason: "not_configured" };
 
   const until = new Date();
   const since = new Date(until.getTime() - 14 * 24 * 60 * 60 * 1000);
-  const zone = zoneTag.replace(/[^a-f0-9]/gi, "");
-
-  if (!zone) return { ok: false, reason: "not_configured" };
 
   const query = `
-    query {
+    query WebAnalytics($zoneTag: string!, $start: Time!, $end: Time!) {
       viewer {
-        zones(filter: { zoneTag: "${zone}" }) {
+        zones(filter: { zoneTag: $zoneTag }) {
           rumPageloadEventsAdaptiveGroups(
-            limit: 14
+            limit: 100
             filter: {
-              datetime_geq: "${since.toISOString()}"
-              datetime_leq: "${until.toISOString()}"
+              datetime_geq: $start
+              datetime_leq: $end
             }
             orderBy: [date_ASC]
           ) {
@@ -44,25 +41,39 @@ async function fetchCloudflareAnalytics(): Promise<AnalyticsResult> {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
+        Accept: "application/json",
       },
-      body: JSON.stringify({ query }),
+      body: JSON.stringify({
+        query,
+        variables: {
+          zoneTag,
+          start: since.toISOString(),
+          end: until.toISOString(),
+        },
+      }),
       cache: "no-store",
     });
 
-    if (!res.ok) return { ok: false, reason: "request_failed" };
-
-    const json = await res.json();
-    if (json?.errors?.length) return { ok: false, reason: "api_error" };
+    const json = await res.json().catch(() => null);
+    if (!res.ok || json?.errors?.length) {
+      console.error("Cloudflare Analytics error", {
+        status: res.status,
+        errors: json?.errors,
+        messages: json?.messages,
+      });
+      return { ok: false, reason: "api_error" };
+    }
 
     const groups = json?.data?.viewer?.zones?.[0]?.rumPageloadEventsAdaptiveGroups ?? [];
     const days: DayStat[] = groups.map((g: { count: number; dimensions?: { date: string } }) => ({
       date: g.dimensions?.date ?? "",
-      pageviews: g.count,
+      pageviews: Number(g.count) || 0,
     }));
-    const totalPageviews = days.reduce((sum, d) => sum + (d.pageviews || 0), 0);
+    const totalPageviews = days.reduce((sum, d) => sum + d.pageviews, 0);
 
     return { ok: true, days, totalPageviews };
-  } catch {
+  } catch (error) {
+    console.error("Cloudflare Analytics request failed", error);
     return { ok: false, reason: "request_failed" };
   }
 }

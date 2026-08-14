@@ -1,13 +1,16 @@
 import Reveal from "@/components/Reveal";
+import fotoSobre from "@/app/assets/dra-adriely-sobre.jpg";
 
 export default function Sobre() {
   return (
     <section id="sobre" className="bg-ivory py-24 px-[6vw]">
       <div className="max-w-[1220px] mx-auto grid md:grid-cols-[0.85fr_1.15fr] gap-[5vw] items-center">
-        <Reveal className="gold-frame relative aspect-[4/5] max-w-[340px] mx-auto md:max-w-none">
+        <Reveal className="gold-frame relative aspect-[4/5] max-w-[340px] mx-auto md:max-w-none overflow-hidden">
           <img
-            src="/img/dra-adriely-sobre.jpg"
+            src={fotoSobre.src}
             alt="Dra. Adriely Anute, retrato"
+            width={fotoSobre.width}
+            height={fotoSobre.height}
             className="absolute inset-0 h-full w-full object-cover"
             loading="eager"
             decoding="async"
