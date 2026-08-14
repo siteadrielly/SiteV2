@@ -158,20 +158,19 @@ export async function seedBeforeAfterAcervo() {
   ] as const;
 
   let imported = 0;
+  let errorMessage: string | null = null;
 
   try {
-    // Os 8 arquivos já foram enviados manualmente para o bucket `before-after`.
-    // Aqui apenas convertemos os registros para as URLs públicas do Storage.
     const { data: storageFiles, error: storageError } = await supabase.storage
       .from("before-after")
       .list("", { limit: 100, offset: 0 });
 
-    if (storageError) throw new Error(`Não foi possível acessar o bucket before-after: ${storageError.message}`);
+    if (storageError) throw new Error(`Erro ao listar o bucket: ${storageError.message}`);
 
     const available = new Set((storageFiles ?? []).map((file) => file.name));
     const missing = items.map(([, filename]) => filename).filter((filename) => !available.has(filename));
     if (missing.length) {
-      throw new Error(`Arquivos não encontrados no bucket before-after: ${missing.join(", ")}`);
+      throw new Error(`Arquivos não encontrados: ${missing.join(", ")}`);
     }
 
     for (const [procedure, filename, legacyUrl] of items) {
@@ -184,23 +183,16 @@ export async function seedBeforeAfterAcervo() {
         .or(`image_url.eq.${legacyUrl},image_url.eq.${image_url}`)
         .limit(1);
 
-      if (readError) throw readError;
+      if (readError) throw new Error(`Erro ao consultar "${filename}": ${readError.message}`);
 
       const row = existing?.[0];
       if (row) {
-        // Se o registro veio da versão anterior, troca a referência local pela do Storage.
         if (row.image_url !== image_url) {
           const { error: updateError } = await supabase
             .from("before_after")
-            .update({
-              procedure,
-              image_url,
-              before_url: image_url,
-              after_url: image_url,
-              published: true,
-            })
+            .update({ procedure, image_url, before_url: image_url, after_url: image_url, published: true })
             .eq("id", row.id);
-          if (updateError) throw updateError;
+          if (updateError) throw new Error(`Erro ao atualizar "${filename}": ${updateError.message}`);
           imported += 1;
         }
         continue;
@@ -213,20 +205,24 @@ export async function seedBeforeAfterAcervo() {
         after_url: image_url,
         published: true,
       });
-      if (insertError) throw insertError;
+      if (insertError) throw new Error(`Erro ao inserir "${filename}": ${insertError.message}`);
       imported += 1;
     }
   } catch (error) {
+    errorMessage = error instanceof Error ? error.message : "Erro desconhecido";
     console.error("Falha ao importar acervo do Storage:", error);
-    revalidatePath("/admin/dashboard/antes-depois");
-    redirect("/admin/dashboard/antes-depois?importError=storage");
   }
 
   revalidatePath("/", "layout");
   revalidatePath("/resultados");
   revalidatePath("/admin/dashboard/antes-depois");
+
+  if (errorMessage) {
+    redirect(`/admin/dashboard/antes-depois?importError=${encodeURIComponent(errorMessage)}`);
+  }
   redirect(`/admin/dashboard/antes-depois?imported=${imported}`);
 }
+
 
 export async function deleteBeforeAfter(id: string) {
   const { supabase } = await requireUser();

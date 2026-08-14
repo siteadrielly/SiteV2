@@ -1,3 +1,13 @@
+# v1.19.0
+
+- Corrigido o quadro da foto da seção Sobre, que ficava com altura zero em produção
+  (a classe `aspect-[4/5]` não estava resultando em altura visível). Trocado por
+  padding percentual (`padding-top: 125%`), que não depende dessa classe.
+- `seedBeforeAfterAcervo` agora propaga a mensagem de erro real (Supabase/Storage)
+  para a tela do admin, em vez de sempre mostrar o mesmo aviso genérico — facilita
+  diagnosticar por que a importação do acervo inicial falha.
+- Painel Vital atualizado para exibir `v1.19`.
+
 # v1.18.0
 
 - O acervo inicial do Antes e Depois agora usa exclusivamente os 8 arquivos já enviados ao bucket público `before-after`.

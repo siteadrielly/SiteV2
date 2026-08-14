@@ -34,7 +34,8 @@ export default async function AntesDepoisListPage({ searchParams }: { searchPara
       ) : null}
       {searchParams.importError ? (
         <div className="mt-6 border border-red-700/20 bg-red-50/40 px-4 py-3 text-sm text-ink-soft">
-          Não foi possível importar o acervo. Verifique se os 8 arquivos estão no bucket público <strong>before-after</strong> e tente novamente.
+          <strong className="block text-ink mb-1">Não foi possível importar o acervo.</strong>
+          {decodeURIComponent(searchParams.importError)}
         </div>
       ) : null}
 
