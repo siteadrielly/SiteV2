@@ -4,7 +4,10 @@ export default function Sobre({ imageUrl }: { imageUrl?: string | null }) {
   return (
     <section id="sobre" className="bg-ivory py-24 px-[6vw]">
       <div className="max-w-[1220px] mx-auto grid md:grid-cols-[0.85fr_1.15fr] gap-[5vw] items-center">
-        <div className="gold-frame relative aspect-[4/5] max-w-[340px] mx-auto md:max-w-none overflow-hidden">
+        <div
+          className="gold-frame relative w-full max-w-[340px] mx-auto md:max-w-none overflow-hidden"
+          style={{ paddingTop: "125%" }}
+        >
           <img
             src={imageUrl || "/img/smile-portrait.webp"}
             alt="Dra. Adriely Anute, retrato"
