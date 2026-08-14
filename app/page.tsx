@@ -21,9 +21,10 @@ export default async function Home() {
       .limit(1),
     supabase
       .from("before_after")
-      .select("id, procedure, before_url, after_url")
+      .select("id, procedure, image_url")
       .eq("published", true)
       .order("created_at", { ascending: false })
+      .not("image_url", "is", null)
       .limit(6),
   ]);
 

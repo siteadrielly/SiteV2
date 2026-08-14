@@ -92,18 +92,46 @@ export async function createBeforeAfter(formData: FormData) {
   const { supabase } = await requireUser();
   const procedure = String(formData.get("procedure") || "").trim();
   const published = formData.get("published") === "on";
-  const beforeFile = formData.get("before") as File;
-  const afterFile = formData.get("after") as File;
-  if (!procedure || !beforeFile?.size || !afterFile?.size) {
-    throw new Error("Procedimento e as duas fotos (antes e depois) são obrigatórios.");
+  const imageFile = formData.get("image") as File;
+  if (!procedure || !imageFile?.size) {
+    throw new Error("Procedimento e a imagem 1:1 são obrigatórios.");
   }
-  const before_url = await uploadImage(supabase, "before-after", beforeFile);
-  const after_url = await uploadImage(supabase, "before-after", afterFile);
-  const { error } = await supabase.from("before_after").insert({ procedure, before_url, after_url, published });
+  const image_url = await uploadImage(supabase, "before-after", imageFile);
+  const { error } = await supabase.from("before_after").insert({ procedure, image_url, published });
   if (error) throw new Error(`Não foi possível salvar o caso: ${error.message}`);
+  revalidatePath("/");
   revalidatePath("/resultados");
   revalidatePath("/admin/dashboard/antes-depois");
   redirect("/admin/dashboard/antes-depois");
+}
+
+export async function seedBeforeAfterAcervo() {
+  const { supabase } = await requireUser();
+  const items = [
+    ["Toxina botulínica", "/resultados/acervo/botox-testa-01.webp"],
+    ["Facetas", "/resultados/acervo/facetas-01.webp"],
+    ["Facetas", "/resultados/acervo/facetas-02.webp"],
+    ["Rinomodelação", "/resultados/acervo/rino-01.webp"],
+    ["Rinomodelação", "/resultados/acervo/rino-02.webp"],
+    ["Rinomodelação", "/resultados/acervo/rino-03.webp"],
+    ["Rinomodelação", "/resultados/acervo/rino-04.webp"],
+    ["Rinomodelação", "/resultados/acervo/rino-05.webp"],
+  ];
+  const { data: existing } = await supabase
+    .from("before_after")
+    .select("image_url")
+    .in("image_url", items.map(([, url]) => url));
+  const existingUrls = new Set((existing ?? []).map((row) => row.image_url));
+  const rows = items
+    .filter(([, url]) => !existingUrls.has(url))
+    .map(([procedure, image_url]) => ({ procedure, image_url, published: true }));
+  if (rows.length) {
+    const { error } = await supabase.from("before_after").insert(rows);
+    if (error) throw new Error(`Não foi possível importar o acervo: ${error.message}`);
+  }
+  revalidatePath("/");
+  revalidatePath("/resultados");
+  revalidatePath("/admin/dashboard/antes-depois");
 }
 
 export async function deleteBeforeAfter(id: string) {
