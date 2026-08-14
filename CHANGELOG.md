@@ -1,4 +1,12 @@
-## 1.7.0
+# Changelog
+
+## 1.9.0
+- Corrige a galeria Sobre para renderizar a foto sem Reveal/opacity animation.
+- Corrige Analytics Cloudflare para consultar o dataset RUM no escopo da conta.
+- Usa CLOUDFLARE_ACCOUNT_ID + CLOUDFLARE_ANALYTICS_API_TOKEN e filtra pelo host adrielyanute.com.br.
+- Exibe a mensagem real retornada pela GraphQL em caso de erro.
+
+1.7.0
 - Corrigida a imagem da seção Sobre para carregamento direto do asset público.
 - Mantida a separação entre token de deploy e token da GraphQL Analytics API.
 
