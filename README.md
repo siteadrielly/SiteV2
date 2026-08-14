@@ -16,9 +16,11 @@ npm run dev
 2. No GitHub, vá em Settings → Secrets and variables → Actions e adicione:
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   - `CLOUDFLARE_API_TOKEN` (crie em dash.cloudflare.com → My Profile → API Tokens, com permissão de editar Workers)
+   - `CLOUDFLARE_API_TOKEN` (token usado pelo GitHub Actions para editar/deployar o Worker)
    - `CLOUDFLARE_ACCOUNT_ID` (aparece na barra lateral do dashboard da Cloudflare)
-   - (opcional) `CLOUDFLARE_ZONE_TAG`, se for ativar a aba Analytics
+   - `CLOUDFLARE_ZONE_TAG` (Zone ID do domínio), necessário para a aba Analytics
+   - `CLOUDFLARE_ANALYTICS_API_TOKEN` (token com Account → Account Analytics → Read, usado somente pela aba Analytics)
+   - `NEXT_PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN` (token do site no Web Analytics, necessário para o beacon manual)
 3. Dê `git push` — o workflow `.github/workflows/deploy.yml` builda e publica
    automaticamente no Cloudflare Workers a cada push na `main`.
 4. Configure o domínio `adrielyanute.com.br` direto no dashboard da Cloudflare
@@ -27,7 +29,7 @@ npm run dev
 ## Banco de dados
 
 Rode `supabase/schema.sql` inteiro no SQL Editor do Supabase. Crie os 3
-buckets de Storage manualmente (blog-covers, testimonials, before-after)
+buckets de Storage (`blog-covers`, `testimonials`, `before-after`) — o script de correção abaixo também pode criá-los como públicos
 antes de rodar a parte de Storage do script. Crie o usuário do admin em
 Authentication → Users → Add user (sem cadastro público no site).
 

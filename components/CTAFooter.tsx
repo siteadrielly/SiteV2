@@ -30,6 +30,7 @@ export function Footer() {
           <h4 className="text-gold text-[0.7rem] tracking-[0.2em] uppercase mb-3">Navegação</h4>
           <a href="#sobre" className="block text-sm font-light mb-1.5 hover:text-gold-light">Sobre</a>
           <a href="#especialidades" className="block text-sm font-light mb-1.5 hover:text-gold-light">Especialidades</a>
+          <a href="/#resultados" className="block text-sm font-light mb-1.5 hover:text-gold-light">Resultados</a>
           <a href="#estrutura" className="block text-sm font-light mb-1.5 hover:text-gold-light">Estrutura</a>
           <a href="/blog" className="block text-sm font-light mb-1.5 hover:text-gold-light">Blog</a>
         </div>

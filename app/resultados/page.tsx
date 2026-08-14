@@ -23,8 +23,8 @@ export default async function ResultadosPage() {
             {cases?.length ? cases.map((c) => (
               <div key={c.id}>
                 <div className="grid grid-cols-2 gap-1">
-                  <div className="relative aspect-square border border-line-light overflow-hidden"><Image src={c.before_url} alt={`Antes — ${c.procedure}`} fill className="object-cover" /></div>
-                  <div className="relative aspect-square border border-line-light overflow-hidden"><Image src={c.after_url} alt={`Depois — ${c.procedure}`} fill className="object-cover" /></div>
+                  <div className="relative aspect-square border border-line-light overflow-hidden"><Image src={c.before_url} alt={`Antes — ${c.procedure}`} fill unoptimized sizes="(max-width: 768px) 50vw, 20vw" className="object-cover" /></div>
+                  <div className="relative aspect-square border border-line-light overflow-hidden"><Image src={c.after_url} alt={`Depois — ${c.procedure}`} fill unoptimized sizes="(max-width: 768px) 50vw, 20vw" className="object-cover" /></div>
                 </div>
                 <p className="text-center text-[0.66rem] tracking-[0.12em] uppercase text-ink-soft mt-3">{c.procedure}</p>
               </div>

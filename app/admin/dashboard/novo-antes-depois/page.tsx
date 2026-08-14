@@ -18,7 +18,7 @@ export default function NovoAntesDepoisPage() {
           <input type="file" name="before" required accept="image/*" className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:border-0 file:bg-gold file:text-black file:text-xs file:tracking-[0.1em] file:uppercase" /></div>
         <div><label className="block text-gold-dim text-[0.68rem] tracking-[0.18em] uppercase mb-2">Foto — depois</label>
           <input type="file" name="after" required accept="image/*" className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:border-0 file:bg-gold file:text-black file:text-xs file:tracking-[0.1em] file:uppercase" /></div>
-        <label className="flex items-center gap-2 text-sm text-ink-soft"><input type="checkbox" name="published" className="accent-gold" /> Publicar (deixe desmarcado até confirmar autorização da Dra. Adriely)</label>
+        <label className="flex items-center gap-2 text-sm text-ink-soft"><input type="checkbox" name="published" defaultChecked className="accent-gold" /> Publicar (deixe desmarcado até confirmar autorização da Dra. Adriely)</label>
         <button type="submit" className="bg-black text-ivory text-xs tracking-[0.16em] uppercase py-3 px-8 hover:bg-espresso transition">Salvar caso</button>
       </form>
     </div>

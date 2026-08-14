@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, Jost, Cormorant_Garamond } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -50,10 +51,21 @@ export const viewport = {
   themeColor: "#141210",
 };
 
+const cloudflareWebAnalyticsToken = process.env.NEXT_PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={`${fraunces.variable} ${jost.variable} ${cormorant.variable}`}>
-      <body className="font-body font-light antialiased">{children}</body>
+      <body className="font-body font-light antialiased">
+        {children}
+        {cloudflareWebAnalyticsToken ? (
+          <Script
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            strategy="afterInteractive"
+            data-cf-beacon={JSON.stringify({ token: cloudflareWebAnalyticsToken })}
+          />
+        ) : null}
+      </body>
     </html>
   );
 }

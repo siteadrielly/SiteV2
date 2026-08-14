@@ -56,8 +56,18 @@ create policy "Delete autenticado em antes-depois" on public.before_after for de
 -- ============================================================
 -- STORAGE
 -- ============================================================
--- Crie 3 buckets PÚBLICOS no painel: blog-covers, testimonials, before-after
--- Depois rode:
+-- Cria os 3 buckets públicos automaticamente.
+insert into storage.buckets (id, name, public)
+values
+  ('blog-covers', 'blog-covers', true),
+  ('testimonials', 'testimonials', true),
+  ('before-after', 'before-after', true)
+on conflict (id) do update
+set public = excluded.public;
+
+drop policy if exists "Leitura publica no storage" on storage.objects;
+drop policy if exists "Upload autenticado no storage" on storage.objects;
+drop policy if exists "Delete autenticado no storage" on storage.objects;
 
 create policy "Leitura publica no storage" on storage.objects for select to public
 using (bucket_id in ('blog-covers', 'testimonials', 'before-after'));

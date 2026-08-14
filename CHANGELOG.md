@@ -1,4 +1,19 @@
-# Changelog — Site Dra. Adriely Anute
+# Changelog
+
+## 1.5.0
+- **Analytics:** separa o token de leitura do GraphQL Analytics (`CLOUDFLARE_ANALYTICS_API_TOKEN`) do token usado pelo Wrangler para deploy.
+- **Analytics:** a aba do painel consulta o GraphQL Analytics API usando `Account Analytics → Read` e o `CLOUDFLARE_ZONE_TAG`.
+- **Deploy:** o `CLOUDFLARE_API_TOKEN` não é mais enviado como secret para dentro do Worker.
+
+
+ Site Dra. Adriely Anute
+
+## v1.3.0
+- **Antes e Depois:** a opção “Publicar” passa a vir marcada por padrão no cadastro de novos casos, evitando que casos salvos fiquem invisíveis em `/resultados` por acidente. O checkbox continua permitindo salvar como rascunho quando necessário.
+- **Storage:** mantém os buckets públicos `before-after`, `testimonials` e `blog-covers` já configurados no Supabase; nenhuma recriação de bucket é necessária.
+- **Resultados:** mantém o carregamento das imagens do Supabase com `unoptimized` para evitar problemas de entrega/otimização no Next.js + Cloudflare Workers.
+- **Analytics:** mantém `CLOUDFLARE_ZONE_TAG` como configuração necessária para a consulta do Cloudflare Web Analytics.
+- **Deploy:** mantém Node.js 22 no GitHub Actions.
 
 ## v1.2.0
 - **Mudança de arquitetura de deploy**: de Vercel para o padrão da agência —

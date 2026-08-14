@@ -2,6 +2,12 @@ import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
+  if (pathname === "/admin" || pathname === "/admin/") {
+    return NextResponse.redirect(new URL("/admin/login", request.url));
+  }
+
   let response = NextResponse.next({ request: { headers: request.headers } });
 
   const supabase = createServerClient(
@@ -37,5 +43,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/dashboard/:path*"],
+  matcher: ["/admin", "/admin/", "/admin/dashboard/:path*"],
 };

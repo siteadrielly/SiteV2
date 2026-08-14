@@ -6,7 +6,7 @@ export default function Sobre() {
     <section id="sobre" className="bg-ivory py-24 px-[6vw]">
       <div className="max-w-[1220px] mx-auto grid md:grid-cols-[0.85fr_1.15fr] gap-[5vw] items-center">
         <Reveal className="gold-frame relative aspect-[4/5] max-w-[340px] mx-auto md:max-w-none">
-          <Image src="/img/smile-portrait.webp" alt="Dra. Adriely Anute, retrato" fill sizes="(max-width: 768px) 90vw, 40vw" className="object-cover" />
+          <Image src="/img/dra-adriely-sobre.jpg" alt="Dra. Adriely Anute, retrato" fill sizes="(max-width: 768px) 90vw, 40vw" className="object-cover" />
         </Reveal>
         <Reveal delay={0.1}>
           <p className="text-gold-dim text-[0.72rem] tracking-[0.28em] uppercase">Sobre</p>
