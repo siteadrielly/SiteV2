@@ -10,7 +10,7 @@ import Testimonials from "@/components/Testimonials";
 import InstagramSection from "@/components/InstagramSection";
 import { FinalCTA, Footer } from "@/components/CTAFooter";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const supabase = createClient();

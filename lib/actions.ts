@@ -66,10 +66,9 @@ export async function updateSiteImages(formData: FormData) {
 
   if (error) throw new Error(`Não foi possível atualizar as imagens: ${error.message}`);
 
-  revalidatePath("/");
-  revalidatePath("/admin/dashboard");
+  revalidatePath("/", "layout");
   revalidatePath("/admin/dashboard/imagens");
-  redirect("/admin/dashboard/imagens");
+  redirect("/admin/dashboard/imagens?updated=1");
 }
 
 export async function createPost(formData: FormData) {
@@ -130,7 +129,14 @@ export async function createBeforeAfter(formData: FormData) {
     throw new Error("Procedimento e a imagem 1:1 são obrigatórios.");
   }
   const image_url = await uploadImage(supabase, "before-after", imageFile);
-  const { error } = await supabase.from("before_after").insert({ procedure, image_url, published });
+  const { error } = await supabase.from("before_after").insert({
+    procedure,
+    image_url,
+    // Mantém compatibilidade com o schema antigo, que exigia estes campos.
+    before_url: image_url,
+    after_url: image_url,
+    published,
+  });
   if (error) throw new Error(`Não foi possível salvar o caso: ${error.message}`);
   revalidatePath("/");
   revalidatePath("/resultados");
@@ -141,30 +147,85 @@ export async function createBeforeAfter(formData: FormData) {
 export async function seedBeforeAfterAcervo() {
   const { supabase } = await requireUser();
   const items = [
-    ["Toxina botulínica", "/resultados/acervo/botox-testa-01.webp"],
-    ["Facetas", "/resultados/acervo/facetas-01.webp"],
-    ["Facetas", "/resultados/acervo/facetas-02.webp"],
-    ["Rinomodelação", "/resultados/acervo/rino-01.webp"],
-    ["Rinomodelação", "/resultados/acervo/rino-02.webp"],
-    ["Rinomodelação", "/resultados/acervo/rino-03.webp"],
-    ["Rinomodelação", "/resultados/acervo/rino-04.webp"],
-    ["Rinomodelação", "/resultados/acervo/rino-05.webp"],
-  ];
-  const { data: existing } = await supabase
-    .from("before_after")
-    .select("image_url")
-    .in("image_url", items.map(([, url]) => url));
-  const existingUrls = new Set((existing ?? []).map((row) => row.image_url));
-  const rows = items
-    .filter(([, url]) => !existingUrls.has(url))
-    .map(([procedure, image_url]) => ({ procedure, image_url, published: true }));
-  if (rows.length) {
-    const { error } = await supabase.from("before_after").insert(rows);
-    if (error) throw new Error(`Não foi possível importar o acervo: ${error.message}`);
+    ["Toxina botulínica", "botox-testa-01.webp", "/img/resultados/botox-testa-01.webp"],
+    ["Facetas", "facetas-01.webp", "/img/resultados/facetas-01.webp"],
+    ["Facetas", "facetas-02.webp", "/img/resultados/facetas-02.webp"],
+    ["Rinomodelação", "rino-01.webp", "/img/resultados/rino-01.webp"],
+    ["Rinomodelação", "rino-02.webp", "/img/resultados/rino-02.webp"],
+    ["Rinomodelação", "rino-03.webp", "/img/resultados/rino-03.webp"],
+    ["Rinomodelação", "rino-04.webp", "/img/resultados/rino-04.webp"],
+    ["Rinomodelação", "rino-05.webp", "/img/resultados/rino-05.webp"],
+  ] as const;
+
+  let imported = 0;
+
+  try {
+    // Os 8 arquivos já foram enviados manualmente para o bucket `before-after`.
+    // Aqui apenas convertemos os registros para as URLs públicas do Storage.
+    const { data: storageFiles, error: storageError } = await supabase.storage
+      .from("before-after")
+      .list("", { limit: 100, offset: 0 });
+
+    if (storageError) throw new Error(`Não foi possível acessar o bucket before-after: ${storageError.message}`);
+
+    const available = new Set((storageFiles ?? []).map((file) => file.name));
+    const missing = items.map(([, filename]) => filename).filter((filename) => !available.has(filename));
+    if (missing.length) {
+      throw new Error(`Arquivos não encontrados no bucket before-after: ${missing.join(", ")}`);
+    }
+
+    for (const [procedure, filename, legacyUrl] of items) {
+      const { data: publicData } = supabase.storage.from("before-after").getPublicUrl(filename);
+      const image_url = publicData.publicUrl;
+
+      const { data: existing, error: readError } = await supabase
+        .from("before_after")
+        .select("id, image_url")
+        .or(`image_url.eq.${legacyUrl},image_url.eq.${image_url}`)
+        .limit(1);
+
+      if (readError) throw readError;
+
+      const row = existing?.[0];
+      if (row) {
+        // Se o registro veio da versão anterior, troca a referência local pela do Storage.
+        if (row.image_url !== image_url) {
+          const { error: updateError } = await supabase
+            .from("before_after")
+            .update({
+              procedure,
+              image_url,
+              before_url: image_url,
+              after_url: image_url,
+              published: true,
+            })
+            .eq("id", row.id);
+          if (updateError) throw updateError;
+          imported += 1;
+        }
+        continue;
+      }
+
+      const { error: insertError } = await supabase.from("before_after").insert({
+        procedure,
+        image_url,
+        before_url: image_url,
+        after_url: image_url,
+        published: true,
+      });
+      if (insertError) throw insertError;
+      imported += 1;
+    }
+  } catch (error) {
+    console.error("Falha ao importar acervo do Storage:", error);
+    revalidatePath("/admin/dashboard/antes-depois");
+    redirect("/admin/dashboard/antes-depois?importError=storage");
   }
-  revalidatePath("/");
+
+  revalidatePath("/", "layout");
   revalidatePath("/resultados");
   revalidatePath("/admin/dashboard/antes-depois");
+  redirect(`/admin/dashboard/antes-depois?imported=${imported}`);
 }
 
 export async function deleteBeforeAfter(id: string) {

@@ -4,7 +4,7 @@ import { deleteBeforeAfter, seedBeforeAfterAcervo } from "@/lib/actions";
 
 export const dynamic = "force-dynamic";
 
-export default async function AntesDepoisListPage() {
+export default async function AntesDepoisListPage({ searchParams }: { searchParams: { imported?: string; importError?: string } }) {
   const supabase = createClient();
   const { data: cases } = await supabase
     .from("before_after")
@@ -27,6 +27,17 @@ export default async function AntesDepoisListPage() {
           <a href="/admin/dashboard/novo-antes-depois" className="bg-black text-ivory text-xs tracking-[0.12em] uppercase py-2.5 px-5 hover:bg-espresso transition">+ Novo caso</a>
         </div>
       </div>
+      {searchParams.imported ? (
+        <div className="mt-6 border border-green-700/20 bg-green-50/40 px-4 py-3 text-sm text-ink-soft">
+          Acervo importado: {searchParams.imported} novos casos adicionados.
+        </div>
+      ) : null}
+      {searchParams.importError ? (
+        <div className="mt-6 border border-red-700/20 bg-red-50/40 px-4 py-3 text-sm text-ink-soft">
+          Não foi possível importar o acervo. Verifique se os 8 arquivos estão no bucket público <strong>before-after</strong> e tente novamente.
+        </div>
+      ) : null}
+
       <div className="mt-8 border-t border-line-light">
         {cases?.length ? cases.map((c) => (
           <div key={c.id} className="flex items-center justify-between gap-4 py-4 border-b border-line-light">

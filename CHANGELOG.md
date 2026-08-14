@@ -1,4 +1,27 @@
+# v1.18.0
+
+- O acervo inicial do Antes e Depois agora usa exclusivamente os 8 arquivos já enviados ao bucket público `before-after`.
+- O botão "Importar acervo inicial" valida a existência dos arquivos no Storage antes de cadastrar os casos.
+- Registros antigos que apontavam para `/img/resultados/...` são atualizados para as URLs públicas do Supabase Storage.
+- A importação não duplica casos já cadastrados.
+- Corrigido o fluxo da Server Action para não capturar o `redirect()` dentro de `try/catch`, evitando o erro de servidor observado no POST.
+- Painel Vital atualizado para exibir `v1.18`.
+
+# v1.17.0
+
+- Corrige o acervo inicial do Antes e Depois para usar as imagens estáticas já incluídas em `public/img/resultados/`.
+- Não tenta buscar nem fazer upload dessas 8 imagens no Supabase Storage.
+- Corrige os caminhos do acervo para `/img/resultados/...`.
+- Mantém `image_url` como o campo principal e compatibilidade com `before_url`/`after_url`.
+- Migration idempotente para preparar o banco e cadastrar os 8 casos.
+
 # Changelog
+
+## v1.16 — Correção do schema Antes e Depois
+- Corrigida a importação do acervo inicial quando `before_url` e `after_url` antigos ainda são NOT NULL.
+- O novo formato continua usando uma única `image_url`; os campos antigos ficam opcionais.
+- Novos casos gravam `image_url` e também os campos legados para compatibilidade.
+
 
 ## v1.14 — Identificação da versão no Painel Vital
 - Atualizada a versão do projeto para 1.14.0.
@@ -39,3 +62,8 @@
 - Corrigido o botão "Importar acervo inicial": as 8 imagens agora existem nos caminhos públicos usados pelos registros.
 - O acervo inclui 1 caso de toxina botulínica, 2 de facetas e 5 de rinomodelação.
 - Os casos importados são publicados automaticamente e aparecem na galeria da home e em /resultados.
+
+## 1.15.0
+- Reparação idempotente do schema de Antes e Depois e das imagens editáveis do site.
+- Importação do acervo inicial com tratamento de erro e confirmação no painel.
+- Home em modo dinâmico para refletir imediatamente alterações de Hero/Sobre.

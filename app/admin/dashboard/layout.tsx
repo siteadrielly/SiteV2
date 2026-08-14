@@ -15,7 +15,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <div className="min-h-screen bg-ivory">
       <header className="bg-black border-b border-line">
         <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
-          <p className="font-display text-ivory tracking-[0.1em] uppercase text-sm">Painel Vital <span className="text-gold">· Adriely Anute</span> <span className="text-ivory/45 ml-2 tracking-[0.08em] normal-case text-[10px]">v1.14</span></p>
+          <p className="font-display text-ivory tracking-[0.1em] uppercase text-sm">Painel Vital <span className="text-gold">· Adriely Anute</span> <span className="text-ivory/45 ml-2 tracking-[0.08em] normal-case text-[10px]">v1.18</span></p>
           <form action={signOut}>
             <button className="text-ivory/70 text-xs tracking-[0.12em] uppercase hover:text-gold-light transition">Sair</button>
           </form>
