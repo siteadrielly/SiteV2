@@ -1,6 +1,6 @@
 {
   "name": "adriely-nextjs",
-  "version": "1.19.3",
+  "version": "1.19.5",
   "private": true,
   "scripts": {
     "dev": "next dev",
