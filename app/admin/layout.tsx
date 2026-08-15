@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import RegisterAdminSW from "@/components/admin/RegisterAdminSW";
 
 export const metadata: Metadata = {
   title: "Painel Vital — Adriely Anute",
@@ -16,5 +17,10 @@ export const viewport: Viewport = {
 };
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <RegisterAdminSW />
+      {children}
+    </>
+  );
 }
