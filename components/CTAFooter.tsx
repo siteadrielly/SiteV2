@@ -43,7 +43,7 @@ export function Footer() {
       </div>
       <div className="max-w-[1220px] mx-auto flex flex-wrap justify-between gap-2 mt-10 pt-6 border-t border-line text-xs text-ivory/50">
         <span>© {new Date().getFullYear()} Dra. Adriely Anute. Todos os direitos reservados.</span>
-        <span>CRO-PB 7284</span>
+        <span>CRO-PB 7284 v1.19.3</span>
       </div>
       <div className="max-w-[1220px] mx-auto flex justify-center mt-6">
         <AgencyCredit className="text-ivory/40" label="Site por Agência Rio de la Plata" />
