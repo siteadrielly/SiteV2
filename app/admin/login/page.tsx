@@ -27,11 +27,11 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-black flex items-center justify-center px-6">
+    <main className="min-h-screen bg-black flex flex-col items-center justify-center px-6">
       <form onSubmit={handleSubmit} className="w-full max-w-sm border border-line p-10">
         <div className="text-center mb-8">
-          <p className="font-display text-ivory tracking-[0.14em] uppercase text-sm mb-1">Adriely <span className="text-gold">Anute</span></p>
-          <p className="text-gold text-[0.65rem] tracking-[0.28em] uppercase mt-3">Painel Vital</p>
+          <p className="font-display text-ivory tracking-[0.14em] uppercase text-base mb-1">Painel <span className="text-gold">Vital</span></p>
+          <p className="text-ivory/60 text-[0.7rem] tracking-[0.2em] uppercase mt-2">Adriely Anute</p>
         </div>
         <div className="mb-5">
           <label className="block text-gold text-[0.68rem] tracking-[0.18em] uppercase mb-2">E-mail</label>
@@ -46,6 +46,9 @@ export default function LoginPage() {
           {loading ? "Entrando..." : "Entrar"}
         </button>
       </form>
+      <p className="text-ivory/35 text-[0.62rem] tracking-[0.16em] uppercase mt-6">
+        Painel Vital por Agência Rio de la Plata
+      </p>
     </main>
   );
 }

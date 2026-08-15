@@ -1,3 +1,30 @@
+# v1.19.2
+
+- Substituído o ícone genérico "PV" pela marca oficial do Painel Vital
+  (pulso/batimento dentro de anel quebrado), recriada nas cores da Adriely
+  (preto + dourado + marfim), seguindo exatamente o padrão usado no site
+  do Dr. Pablo (mesma marca, cores adaptadas à paleta de cada cliente).
+- Renomeado o manifest do admin para `admin-manifest.webmanifest` e os
+  ícones para `/icon-192.png` e `/admin-icon-512.png`, batendo com a
+  convenção de nomes usada nos outros clientes da agência.
+- `app/admin/layout.tsx` alinhado com a estrutura do Pablo: adicionado
+  `appleWebApp` (nome e status bar do PWA no iOS) e `viewport.themeColor`
+  específicos do admin.
+
+# v1.19.1
+
+- Corrigido o manifest do PWA: agora existe um manifest separado pro admin
+  (`manifest-admin.json`), com `start_url` apontando pra `/admin/dashboard`.
+  Antes, instalar o PWA abria o site público em vez do Painel Vital.
+- Ajustada a hierarquia visual do login e do header do admin: "Painel Vital"
+  agora é a marca principal (padrão da agência), com o nome do cliente como
+  subtítulo — em vez do contrário.
+- Adicionado o crédito "Painel Vital por Agência Rio de la Plata" no rodapé
+  da tela de login e do dashboard.
+- Novo ícone genérico do Painel Vital ("PV", dourado sobre preto),
+  reaproveitável em qualquer cliente — substitui o ícone específico "AA"
+  usado antes só no contexto do admin/PWA.
+
 # v1.19.0
 
 - Corrigido o quadro da foto da seção Sobre, que ficava com altura zero em produção

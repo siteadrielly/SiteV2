@@ -30,7 +30,6 @@ export const metadata: Metadata = {
   title: "Dra. Adriely Anute — Harmonização Facial & Implantodontia",
   description:
     "Harmonização facial, implantodontia e facetas em João Pessoa, PB. Tratamentos de alto padrão conduzidos com técnica apurada e discrição.",
-  manifest: "/manifest.json",
   openGraph: {
     type: "website",
     url: "https://adrielyanute.com.br/",
