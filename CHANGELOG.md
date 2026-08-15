@@ -1,3 +1,13 @@
+# v1.19.3
+
+- Adicionado o logo real da Agência Rio de la Plata (o "R" com o rio) ao
+  lado do crédito, tanto no login quanto no rodapé do Painel Vital.
+  Criado o componente `AgencyCredit` (reutilizável) para isso.
+- Créditos da agência também adicionados no rodapé do site público
+  (antes só existiam no admin).
+- Adicionado botão "Ver site ↗" no header do Painel Vital, abrindo o
+  site público em nova aba, sem sair do painel.
+
 # v1.19.2
 
 - Substituído o ícone genérico "PV" pela marca oficial do Painel Vital

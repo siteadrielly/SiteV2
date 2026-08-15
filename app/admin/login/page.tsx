@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import AgencyCredit from "@/components/AgencyCredit";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -46,9 +47,7 @@ export default function LoginPage() {
           {loading ? "Entrando..." : "Entrar"}
         </button>
       </form>
-      <p className="text-ivory/35 text-[0.62rem] tracking-[0.16em] uppercase mt-6">
-        Painel Vital por Agência Rio de la Plata
-      </p>
+      <AgencyCredit className="text-ivory/45 mt-6" />
     </main>
   );
 }
