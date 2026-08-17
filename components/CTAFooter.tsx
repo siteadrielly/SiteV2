@@ -43,11 +43,21 @@ export function Footer() {
       </div>
       <div className="max-w-[1220px] mx-auto flex flex-wrap justify-between gap-2 mt-10 pt-6 border-t border-line text-xs text-ivory/50">
         <span>© {new Date().getFullYear()} Dra. Adriely Anute. Todos os direitos reservados.</span>
-        <span>CRO-PB 7284</span>
+        <span>CRO-PB 7284 -  v1.19.5</span>
       </div>
-      <div className="max-w-[1220px] mx-auto flex justify-center mt-6">
-        <AgencyCredit className="text-ivory/40" label="Site por Agência Rio de la Plata" />
-      </div>
+     <div className="max-w-[1220px] mx-auto flex justify-center mt-6">
+  <a
+    href="https://wa.me/5512982808333"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Falar com a Agência Rio de la Plata pelo WhatsApp"
+  >
+    <AgencyCredit
+      className="text-ivory/40 hover:text-ivory/70 transition"
+      label="Site por Agência Rio de la Plata"
+    />
+  </a>
+</div>
     </footer>
   );
 }
