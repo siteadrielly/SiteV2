@@ -16,7 +16,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <div className="min-h-screen bg-ivory">
       <header className="bg-black border-b border-line">
         <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
-          <p className="font-display text-ivory tracking-[0.1em] uppercase text-sm">Painel <span className="text-gold">Vital</span> <span className="text-ivory/45 normal-case tracking-[0.04em]">· Adriely Anute</span> <span className="text-ivory/35 ml-2 tracking-[0.08em] normal-case text-[10px]">v1.9.6</span></p>
+          <p className="font-display text-ivory tracking-[0.1em] uppercase text-sm">Painel <span className="text-gold">Vital</span> <span className="text-ivory/45 normal-case tracking-[0.04em]">· Adriely Anute</span> <span className="text-ivory/35 ml-2 tracking-[0.08em] normal-case text-[10px]">v1.19.5</span></p>
           <div className="flex items-center gap-5">
             <Link
               href="/"

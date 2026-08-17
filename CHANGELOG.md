@@ -1,3 +1,29 @@
+# v1.19.5
+
+Melhorias de SEO, aplicando o Manual Mestre de SEO da agência:
+
+- **robots.txt**: removido o conflito onde `/resultados` era bloqueado
+  via Disallow e também tinha `noindex` — mantendo só o `noindex`
+  (o Disallow impedia o Google de sequer ler essa instrução).
+- **Canonical**: adicionado em todas as páginas (home, blog, cada post,
+  resultados) — evita conteúdo duplicado.
+- **Open Graph corrigido em /blog e /blog/[slug]**: antes herdavam o
+  título/imagem da home ao compartilhar o link; agora cada página tem
+  seu próprio título, descrição e imagem.
+- **Dados estruturados (Schema.org)** — antes inexistentes:
+  - `Dentist` (nome, endereço, telefone, Instagram) em todas as páginas
+  - `WebSite` na raiz
+  - `BlogPosting` + `BreadcrumbList` em cada post do blog
+  - Sem inventar avaliação, preço ou horário — só dados reais confirmados.
+- **Página 404 personalizada**, com a identidade visual do site.
+
+# v1.19.4
+
+- Nova seção "Blog" na página inicial, logo depois de Especialidades —
+  mostra os 3 posts publicados mais recentes (capa, categoria, título,
+  resumo) com link "Ver todos os posts" para /blog. Some automaticamente
+  se ainda não houver posts publicados.
+
 # v1.19.3
 
 - Adicionado o logo real da Agência Rio de la Plata (o "R" com o rio) ao

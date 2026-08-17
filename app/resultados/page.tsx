@@ -4,7 +4,11 @@ import { createClient } from "@/lib/supabase/server";
 import Nav from "@/components/Nav";
 import { Footer } from "@/components/CTAFooter";
 
-export const metadata: Metadata = { title: "Resultados — Dra. Adriely Anute", robots: { index: false, follow: false } };
+export const metadata: Metadata = {
+  title: "Resultados — Dra. Adriely Anute",
+  alternates: { canonical: "/resultados" },
+  robots: { index: false, follow: false },
+};
 export const revalidate = 60;
 
 export default async function ResultadosPage() {

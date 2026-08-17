@@ -6,7 +6,25 @@ import Nav from "@/components/Nav";
 import Reveal from "@/components/Reveal";
 import { Footer } from "@/components/CTAFooter";
 
-export const metadata: Metadata = { title: "Blog — Dra. Adriely Anute", description: "Conteúdo sobre harmonização facial, implantodontia e cuidados com o sorriso." };
+export const metadata: Metadata = {
+  title: "Blog — Dra. Adriely Anute",
+  description: "Conteúdo sobre harmonização facial, implantodontia e cuidados com o sorriso.",
+  alternates: { canonical: "/blog" },
+  openGraph: {
+    type: "website",
+    url: "https://adrielyanute.com.br/blog",
+    title: "Blog — Dra. Adriely Anute",
+    description: "Conteúdo sobre harmonização facial, implantodontia e cuidados com o sorriso.",
+    images: [{ url: "/img/og-image.jpg", width: 1200, height: 630 }],
+    locale: "pt_BR",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blog — Dra. Adriely Anute",
+    description: "Conteúdo sobre harmonização facial, implantodontia e cuidados com o sorriso.",
+    images: ["/img/og-image.jpg"],
+  },
+};
 export const revalidate = 60;
 
 export default async function BlogPage() {

@@ -30,6 +30,7 @@ export const metadata: Metadata = {
   title: "Dra. Adriely Anute — Harmonização Facial & Implantodontia",
   description:
     "Harmonização facial, implantodontia e facetas em João Pessoa, PB. Tratamentos de alto padrão conduzidos com técnica apurada e discrição.",
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     url: "https://adrielyanute.com.br/",
@@ -52,10 +53,40 @@ export const viewport = {
 
 const cloudflareWebAnalyticsToken = process.env.NEXT_PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN;
 
+// Dados estruturados (Schema.org) — só o que representa o negócio real:
+// nome, endereço, telefone e perfil social. Nada de nota, preço ou
+// horário inventado, conforme o manual de SEO da agência.
+const dentistJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Dentist",
+  name: "Dra. Adriely Anute",
+  image: "https://adrielyanute.com.br/img/og-image.jpg",
+  url: "https://adrielyanute.com.br",
+  telephone: "+5583986821511",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Av. Arthur Monteiro de Paiva, 721",
+    addressLocality: "João Pessoa",
+    addressRegion: "PB",
+    postalCode: "58035-010",
+    addressCountry: "BR",
+  },
+  sameAs: ["https://instagram.com/draadrielyanute"],
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Dra. Adriely Anute",
+  url: "https://adrielyanute.com.br",
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={`${fraunces.variable} ${jost.variable} ${cormorant.variable}`}>
       <body className="font-body font-light antialiased">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(dentistJsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }} />
         {children}
         {cloudflareWebAnalyticsToken ? (
           <Script

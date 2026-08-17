@@ -3,6 +3,7 @@ import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Sobre from "@/components/Sobre";
 import Especialidades from "@/components/Especialidades";
+import BlogPreview from "@/components/BlogPreview";
 import ResultadosGaleria from "@/components/ResultadosGaleria";
 import TecnicaBanner from "@/components/TecnicaBanner";
 import Estrutura from "@/components/Estrutura";
@@ -14,7 +15,7 @@ export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const supabase = createClient();
-  const [{ data: testimonials }, { data: beforeAfter }, { data: siteSettings }] = await Promise.all([
+  const [{ data: testimonials }, { data: beforeAfter }, { data: siteSettings }, { data: posts }] = await Promise.all([
     supabase
       .from("testimonials")
       .select("id, name, city, text, image_url")
@@ -32,6 +33,12 @@ export default async function Home() {
       .select("hero_image_url, about_image_url")
       .eq("id", "global")
       .maybeSingle(),
+    supabase
+      .from("posts")
+      .select("slug, title, excerpt, category, cover_url")
+      .eq("published", true)
+      .order("created_at", { ascending: false })
+      .limit(3),
   ]);
 
   return (
@@ -41,6 +48,7 @@ export default async function Home() {
         <Hero imageUrl={siteSettings?.hero_image_url ?? null} />
         <Sobre imageUrl={siteSettings?.about_image_url ?? null} />
         <Especialidades />
+        <BlogPreview posts={posts ?? []} />
         <ResultadosGaleria cases={beforeAfter ?? []} />
         <TecnicaBanner />
         <Estrutura />
