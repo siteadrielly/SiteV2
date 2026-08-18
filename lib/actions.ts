@@ -43,8 +43,9 @@ export async function updateSiteImages(formData: FormData) {
   const { supabase } = await requireUser();
   const heroFile = formData.get("heroImage") as File | null;
   const aboutFile = formData.get("aboutImage") as File | null;
+  const notFoundFile = formData.get("notFoundImage") as File | null;
 
-  if ((!heroFile || heroFile.size === 0) && (!aboutFile || aboutFile.size === 0)) {
+  if ((!heroFile || heroFile.size === 0) && (!aboutFile || aboutFile.size === 0) && (!notFoundFile || notFoundFile.size === 0)) {
     throw new Error("Selecione pelo menos uma imagem para atualizar.");
   }
 
@@ -58,6 +59,11 @@ export async function updateSiteImages(formData: FormData) {
   if (aboutFile?.size) {
     const aboutUrl = await uploadImage(supabase, "site-assets", aboutFile);
     if (aboutUrl) updates.about_image_url = aboutUrl;
+  }
+
+  if (notFoundFile?.size) {
+    const notFoundUrl = await uploadImage(supabase, "site-assets", notFoundFile);
+    if (notFoundUrl) updates.not_found_image_url = notFoundUrl;
   }
 
   const { error } = await supabase

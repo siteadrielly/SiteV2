@@ -1,3 +1,15 @@
+# v1.19.8
+
+- Página 404 reescrita com copy de conversão: "Esta página não existe. E o
+  que também não precisa existir são aquelas marcas de expressão que
+  incomodam você. Já agendou seu Botox?" — com botão "Quero agendar →"
+  direto pro WhatsApp, no mesmo layout dividido do Hero.
+- Nova imagem configurável pelo Painel Vital especificamente pra essa
+  página (aba "Imagens", terceira seção). Usa a foto da seção Sobre como
+  padrão até você trocar.
+- Nova coluna `not_found_image_url` em `site_settings` — rodar
+  `supabase/migration-v1.19.8-404-image.sql` antes de usar.
+
 # v1.19.7
 
 Combina as duas atualizações que ainda não tinham sido aplicadas no seu

@@ -7,7 +7,7 @@ export default async function ImagensPage() {
   const supabase = createClient();
   const { data: settings } = await supabase
     .from("site_settings")
-    .select("hero_image_url, about_image_url")
+    .select("hero_image_url, about_image_url, not_found_image_url")
     .eq("id", "global")
     .maybeSingle();
 
@@ -83,6 +83,39 @@ export default async function ImagensPage() {
           </label>
           <p className="text-xs text-ink-soft mt-2">
             Recomendado: retrato vertical. A foto atual pode ser substituída a qualquer momento.
+          </p>
+        </section>
+
+        <section className="border border-line-light bg-white/30 p-6 lg:col-span-2">
+          <div className="flex items-baseline justify-between gap-4">
+            <div>
+              <p className="text-gold-dim text-[0.68rem] tracking-[0.18em] uppercase">Página 404</p>
+              <h2 className="font-display text-xl text-ink mt-2">Foto da página &quot;não encontrada&quot;</h2>
+            </div>
+            <span className="text-xs text-ink-soft">JPG, PNG ou WebP</span>
+          </div>
+
+          <div className="relative mt-5 aspect-[4/5] max-w-xs overflow-hidden border border-line-light bg-[#E8E0D3]">
+            <img
+              src={settings?.not_found_image_url || "/img/smile-portrait.webp"}
+              alt="Foto atual da página 404"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          </div>
+
+          <label className="block mt-5 max-w-md">
+            <span className="block text-gold-dim text-[0.68rem] tracking-[0.18em] uppercase mb-2">
+              Trocar foto da página 404
+            </span>
+            <input
+              type="file"
+              name="notFoundImage"
+              accept="image/jpeg,image/png,image/webp"
+              className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:border-0 file:bg-gold file:text-black file:text-xs file:tracking-[0.1em] file:uppercase"
+            />
+          </label>
+          <p className="text-xs text-ink-soft mt-2">
+            Aparece na página exibida quando alguém acessa um link quebrado.
           </p>
         </section>
 
