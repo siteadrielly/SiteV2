@@ -34,7 +34,7 @@ export default async function NotFound() {
           </p>
           <div className="flex gap-4 mt-9 flex-wrap">
             <a
-              href="https://wa.me/5583986821511"
+              href="https://wa.me/5583993222422"
               className="bg-gold text-black text-xs tracking-[0.16em] uppercase py-4 px-7 hover:bg-gold-light transition"
             >
               Quero agendar →
