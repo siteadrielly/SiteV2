@@ -51,18 +51,16 @@ export const viewport = {
   themeColor: "#141210",
 };
 
-const cloudflareWebAnalyticsToken = process.env.NEXT_PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN;
+const cloudflareWebAnalyticsToken =
+  process.env.NEXT_PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN;
 
-// Dados estruturados (Schema.org) — só o que representa o negócio real:
-// nome, endereço, telefone e perfil social. Nada de nota, preço ou
-// horário inventado, conforme o manual de SEO da agência.
 const dentistJsonLd = {
   "@context": "https://schema.org",
   "@type": "Dentist",
   name: "Dra. Adriely Anute",
   image: "https://adrielyanute.com.br/img/og-image.jpg",
   url: "https://adrielyanute.com.br",
-  telephone: "+5583986821511",
+  telephone: "+5583993222422",
   address: {
     "@type": "PostalAddress",
     streetAddress: "Av. Arthur Monteiro de Paiva, 721",
@@ -81,18 +79,35 @@ const websiteJsonLd = {
   url: "https://adrielyanute.com.br",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="pt-BR" className={`${fraunces.variable} ${jost.variable} ${cormorant.variable}`}>
+    <html
+      lang="pt-BR"
+      className={`${fraunces.variable} ${jost.variable} ${cormorant.variable}`}
+    >
       <body className="font-body font-light antialiased">
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(dentistJsonLd) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(dentistJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
+
         {children}
+
         {cloudflareWebAnalyticsToken ? (
           <Script
             src="https://static.cloudflareinsights.com/beacon.min.js"
             strategy="afterInteractive"
-            data-cf-beacon={JSON.stringify({ token: cloudflareWebAnalyticsToken })}
+            data-cf-beacon={JSON.stringify({
+              token: cloudflareWebAnalyticsToken,
+            })}
           />
         ) : null}
       </body>
